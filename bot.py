@@ -39,6 +39,8 @@ class Bot(TeleBot):
         if not str(message['chat']['id']) in var.data.keys():
             var.data[str(message['chat']['id'])] = {}
         # tc gir
+        if not 'state' in var.data[str(message['chat']['id'])].keys():
+            var.data[str(message['chat']['id'])]['state'] = ''
         if var.data[str(message['chat']['id'])]['state'] == 'tc_input':
             res = check.tc(message['text'])
             if res:
