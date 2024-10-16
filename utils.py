@@ -178,7 +178,7 @@ def make_appointment(token, start, end, cetvelId, slotId, surgery):
     r = post(url, headers=headers, data=payload)
     return r.content.decode('utf-8')
 
-def check_all():
+def check_all(bot):
     patients = database.read_collection('patients') 
     for patient in patients:
         if not check_token(patient.to_dict()['token']):
