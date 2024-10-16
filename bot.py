@@ -89,42 +89,42 @@ class Bot(TeleBot):
                 var.data[str(message['chat']['id'])]['hospital'] = hospitals[message['text']]
             else:
                 # istanbulsa her hastane okey
-                var.data[str(message.chat.id)]['hospital'] = '-1'
+                var.data[str(message['chat']['id'])]['hospital'] = '-1'
             markup = types.ReplyKeyboardMarkup(resize_keyboard = True)
             markup.add(types.KeyboardButton('Sürekli kontrol et'))
             markup.add(types.KeyboardButton('Belirli saatte kontrol et'))
-            self.send_message(message.chat.id, 'Randevu alım biçimi?', reply_markup = markup)
-            var.data[str(message.chat.id)]['state'] = 'type'
+            self.send_message(message['chat']['id'], 'Randevu alım biçimi?', reply_markup = markup)
+            var.data[str(message['chat']['id'])]['state'] = 'type'
 
         # randevu tipi
-        elif var.data[str(message.chat.id)]['state'] == 'type':
+        elif var.data[str(message['chat']['id'])]['state'] == 'type':
             if message['text'] == 'Sürekli kontrol et':
-                var.data[str(message.chat.id)]['type'] = 'loop'
-                patient = database.document_query('patients', 'username', var.data[str(message.chat.id)]['tc'])
+                var.data[str(message['chat']['id'])]['type'] = 'loop'
+                patient = database.document_query('patients', 'username', var.data[str(message['chat']['id'])]['tc'])
                 data = {
-                            'city': var.data[str(message.chat.id)]['city'],
-                            'type': var.data[str(message.chat.id)]['type'],
-                            'hospital': var.data[str(message.chat.id)]['hospital']
+                            'city': var.data[str(message['chat']['id'])]['city'],
+                            'type': var.data[str(message['chat']['id'])]['type'],
+                            'hospital': var.data[str(message['chat']['id'])]['hospital']
                         }
                 database.update_document('patients', patient[0].id, data)
-                self.send_message(message.chat.id, 'Hasta kaydı yapıldı')
+                self.send_message(message['chat']['id'], 'Hasta kaydı yapıldı')
             else:
-                self.send_message(message.chat.id, 'Randevu tarihin ve saatini giriniz (Örn 2008-01-28 16:00)')
-                var.data[str(message.chat.id)]['type'] = 'datetime'
-                var.data[str(message.chat.id)]['state'] = 'datetime'
+                self.send_message(message['chat']['id'], 'Randevu tarihin ve saatini giriniz (Örn 2008-01-28 16:00)')
+                var.data[str(message['chat']['id'])]['type'] = 'datetime'
+                var.data[str(message['chat']['id'])]['state'] = 'datetime'
 
         # randevu saati
-        elif var.data[str(message.chat.id)]['state'] == 'datetime':
-            var.data[str(message.chat.id)]['datetime'] = message['text']
-            patient = database.document_query('patients', 'username', var.data[str(message.chat.id)]['tc'])
+        elif var.data[str(message['chat']['id'])]['state'] == 'datetime':
+            var.data[str(message['chat']['id'])]['datetime'] = message['text']
+            patient = database.document_query('patients', 'username', var.data[str(message['chat']['id'])]['tc'])
             data = {
-                        'city': var.data[str(message.chat.id)]['city'],
-                        'type': var.data[str(message.chat.id)]['type'],
-                        'hospital': var.data[str(message.chat.id)]['hospital'],
-                        'datetime': var.data[str(message.chat.id)]['datetime']
+                        'city': var.data[str(message['chat']['id'])]['city'],
+                        'type': var.data[str(message['chat']['id'])]['type'],
+                        'hospital': var.data[str(message['chat']['id'])]['hospital'],
+                        'datetime': var.data[str(message['chat']['id'])]['datetime']
                     }
             database.update_document('patients', patient[0].id, data)
-            self.send_message(message.chat.id, 'Hasta kaydı yapıldı')
+            self.send_message(message['chat']['id'], 'Hasta kaydı yapıldı')
 
     def func(self, message):
         message = message['message']
