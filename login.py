@@ -2,6 +2,7 @@ from requests import post
 from json import dumps, loads
 
 def login(username, password):
+    print('login geldi')
     url = "https://prd.mhrs.gov.tr/api/vatandas/login"
     payload = {'kullaniciAdi': username, 'parola':password, 'islemKanali':'VATANDAS_WEB', 'girisTipi':'PAROLA', 'captchaKey':None}
     headers= {
@@ -25,10 +26,14 @@ def login(username, password):
     }
 
     r = post(url, data=dumps(payload), headers=headers)
+    print('istek gönderildi')
     data = loads(r.content.decode('utf-8'))
     if data['success']:
+        print('başarılı')
+        print(data['data']['jwt'])
         return data['data']['jwt']
     else:
+        print('başarısız')
         return False
 
 if __name__ == '__main__':
