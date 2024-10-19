@@ -24,8 +24,14 @@ def login(username, password):
         "Referer": "https://mhrs.gov.tr/",
         "Referrer-Policy": "strict-origin-when-cross-origin"
     }
-
-    r = post(url, data=dumps(payload), headers=headers)
+    r = ''
+    while r == '':
+        try:
+            r = post(url, data=dumps(payload), headers=headers)
+            break
+        except:
+            time.sleep(5)
+            continue
     print('istek gönderildi')
     data = loads(r.content.decode('utf-8'))
     if data['success']:
