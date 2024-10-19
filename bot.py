@@ -67,7 +67,9 @@ class Bot(TeleBot):
             self.send_message(message['chat']['id'], 'parola okuma')
             var.data[str(message['chat']['id'])]['password'] = message['text']
             token = login.login(var.data[str(message['chat']['id'])]['tc'], var.data[str(message['chat']['id'])]['password'])
+            self.send_message(message['chat']['id'], 'token alındı')
             if token:
+                self.send_message(message['chat']['id'], 'token saglandi')
                 database.add_document('patients', {'username':var.data[str(message['chat']['id'])]['tc'], 'password':var.data[str(message['chat']['id'])]['password'], 'token':token})
                 self.send_message(message['chat']['id'], 'Giriş başarılı.')
                 markup = types.ReplyKeyboardMarkup(resize_keyboard = True)
