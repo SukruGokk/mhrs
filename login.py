@@ -29,9 +29,11 @@ def login(username, password):
     while r == '':
         try:
             r = post(url, data=dumps(payload), headers=headers)
+            print('oldu')
             break
         except:
-            time.sleep(5)
+            print('olmadı')
+            time.sleep(3)
             continue
     print('istek gönderildi')
     data = loads(r.content.decode('utf-8'))
