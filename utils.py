@@ -3,6 +3,7 @@ from json import dumps, loads
 import database
 import datetime
 from login import login
+import time
 
 CHAT_ID = '1457226514'
 
@@ -13,7 +14,14 @@ def check_token(token):
         'accept': 'application/json',
         'Authorization': 'Bearer '+token
     }
-    r = get(url, headers=headers)
+    r = ''
+    while r == '':
+        try:
+            r = requests.get(url, headers=headers)
+            break
+        except:
+            time.sleep(5)
+            continue
     data = r.content.decode('utf-8')
     if type(loads(data)) == dict:
         return False
