@@ -1,5 +1,6 @@
 from requests import post
 from json import dumps, loads
+import time
 
 def login(username, password):
     print('login geldi')
