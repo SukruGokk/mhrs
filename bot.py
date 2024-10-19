@@ -64,6 +64,7 @@ class Bot(TeleBot):
 
         # parola gir
         elif var.data[str(message['chat']['id'])]['state'] == 'password_input':
+            self.send_message(message['chat']['id'], 'parola okuma')
             var.data[str(message['chat']['id'])]['password'] = message['text']
             token = login.login(var.data[str(message['chat']['id'])]['tc'], var.data[str(message['chat']['id'])]['password'])
             if token:
