@@ -7,7 +7,7 @@ import utils
 app = Flask(__name__)
 
 API_TOKEN = '7312371034:AAGZuZmtUkYgEUGmr-mbXsmN4VZmLAq0EtQ'
-WEBHOOK_URL = 'https://mhrs-z9lq.onrender.com/update'
+WEBHOOK_URL = 'https://dead-klara-sukruerdem-841b56dc.koyeb.app//update'
 
 bot = Bot(API_TOKEN)
 bot.webhook(WEBHOOK_URL)
